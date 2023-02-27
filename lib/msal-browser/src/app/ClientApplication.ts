@@ -80,9 +80,6 @@ export abstract class ClientApplication {
     // Performance telemetry client
     protected performanceClient: IPerformanceClient;
 
-    // Flag representing whether or not the initialize API has been called and completed
-    protected initialized: boolean;
-
     private ssoSilentMeasurement?: InProgressPerformanceEvent;
     private acquireTokenByCodeAsyncMeasurement?: InProgressPerformanceEvent;
     /**
@@ -106,7 +103,7 @@ export abstract class ClientApplication {
      *
      * @param configuration Object for the MSAL PublicClientApplication instance
      */
-    constructor(configuration: Configuration) {
+    protected constructor(configuration: Configuration) {
         /*
          * If loaded in an environment where window is not available,
          * set internal flag to false so that further requests fail.
@@ -115,7 +112,6 @@ export abstract class ClientApplication {
         this.isBrowserEnvironment = typeof window !== "undefined";
         // Set the configuration.
         this.config = buildConfiguration(configuration, this.isBrowserEnvironment);
-        this.initialized = false;
 
         // Initialize logger
         this.logger = new Logger(this.config.system.loggerOptions, name, version);
@@ -164,12 +160,8 @@ export abstract class ClientApplication {
     /**
      * Initializer function to perform async startup tasks such as connecting to WAM extension
      */
-    async initialize(): Promise<void> {
+    protected async initialize(): Promise<void> {
         this.logger.trace("initialize called");
-        if (this.initialized) {
-            this.logger.info("initialize has already been called, exiting early.");
-            return;
-        }
         this.eventHandler.emitEvent(EventType.INITIALIZE_START);
         if (this.config.system.allowNativeBroker) {
             try {
@@ -178,7 +170,6 @@ export abstract class ClientApplication {
                 this.logger.verbose(e);
             }
         }
-        this.initialized = true;
         this.eventHandler.emitEvent(EventType.INITIALIZE_END);
     }
 
@@ -193,8 +184,6 @@ export abstract class ClientApplication {
      */
     async handleRedirectPromise(hash?: string): Promise<AuthenticationResult | null> {
         this.logger.verbose("handleRedirectPromise called");
-        // Block token acquisition before initialize has been called if native brokering is enabled
-        BrowserUtils.blockNativeBrokerCalledBeforeInitialized(this.config.system.allowNativeBroker, this.initialized);
 
         const loggedInAccounts = this.getAllAccounts();
         if (this.isBrowserEnvironment) {
@@ -857,9 +846,6 @@ export abstract class ClientApplication {
 
         // Block redirectUri opened in a popup from calling MSAL APIs
         BrowserUtils.blockAcquireTokenInPopups();
-
-        // Block token acquisition before initialize has been called if native brokering is enabled
-        BrowserUtils.blockNativeBrokerCalledBeforeInitialized(this.config.system.allowNativeBroker, this.initialized);
 
         // Block redirects if memory storage is enabled but storeAuthStateInCookie is not
         if (interactionType === InteractionType.Redirect &&
