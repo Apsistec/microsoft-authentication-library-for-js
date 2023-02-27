@@ -1,8 +1,26 @@
 # Change Log - @azure/msal-common
 
-This log was last generated on Mon, 06 Feb 2023 18:51:50 GMT and should not be manually modified.
+This log was last generated on Mon, 27 Feb 2023 23:49:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 11.0.0
+
+Mon, 27 Feb 2023 23:49:18 GMT
+
+### Major changes
+
+- Remove deprecated telemetry event "flushMeasurement()" function #5718 (kshabelko@microsoft.com)
+- Reduce telemetry RAM footprint and improve usability/readability #5676 (kshabelko@microsoft.com)
+
+### Minor changes
+
+- Capture native bridge telemetry data points #5698 (kshabelko@microsoft.com)
+
+### Patches
+
+- Reduce preQueueTimeByCorrelationId RAM footprint #5681 (kshabelko@microsoft.com)
+- fixing get account entity from cache using native account id #5695 (lalimasharda@microsoft.com)
 
 ## 10.0.0
 

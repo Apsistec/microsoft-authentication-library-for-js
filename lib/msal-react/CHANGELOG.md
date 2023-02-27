@@ -1,8 +1,16 @@
 # Change Log - @azure/msal-react
 
-This log was last generated on Mon, 06 Feb 2023 18:51:51 GMT and should not be manually modified.
+This log was last generated on Mon, 27 Feb 2023 23:49:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.4
+
+Mon, 27 Feb 2023 23:49:19 GMT
+
+### Patches
+
+- Bump @azure/msal-browser to v2.34.0
 
 ## 1.5.3
 

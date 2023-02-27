@@ -1,8 +1,24 @@
 # Change Log - @azure/msal-browser
 
-This log was last generated on Mon, 06 Feb 2023 18:51:51 GMT and should not be manually modified.
+This log was last generated on Mon, 27 Feb 2023 23:49:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.34.0
+
+Mon, 27 Feb 2023 23:49:18 GMT
+
+### Minor changes
+
+- Reduce telemetry RAM footprint and improve usability/readability #5676 (kshabelko@microsoft.com)
+- Capture native bridge telemetry data points #5698 (kshabelko@microsoft.com)
+- Bump @azure/msal-common to v11.0.0
+
+### Patches
+
+- Reduce preQueueTimeByCorrelationId RAM footprint #5681 (kshabelko@microsoft.com)
+- exporting native classes as internals and separating out native telemetry #5692 (lalimasharda@microsoft.com)
+- Remove deprecated telemetry `flushMeasurements()` function from unit tests #5718 (kshabelko@microsoft.com)
 
 ## 2.33.0
 
